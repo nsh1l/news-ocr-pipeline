@@ -1,60 +1,35 @@
-# News OCR Pipeline - AI Assistant Guide
+# AGENTS.md - News OCR Pipeline
 
 ## プロジェクト概要
+新聞 PDF を OCR でテキスト化し、埋め込みベクトルを生成して Obsidian Vault に知識として取り込むパイプライン。
 
-新聞 PDF → OCR → 埋め込み → Obsidian Vault 知識化パイプライン
+## 技術スタック
+- Python 3.13
+- EasyOCR（日本語・英語 OCR）
+- sentence-transformers（multilingual-e5-small）
+- pdfplumber（PDF 処理）
 
-**言語**: Python  
-**主要技術**: EasyOCR, pdfplumber, sentence-transformers
-
-## ビルドコマンド
-
+## ビルド・実行コマンド
 ```bash
-# 依存関係インストール
-pip install -r requirements.txt
+# パイプライン実行
+python3 obsidian_news_pipeline.py /path/to/news.pdf --date 2026-06-23
 
-# 基本的な使用法
-python3 obsidian_news_pipeline.py /path/to/newspaper.pdf
+# 埋め込み生成
+python3 generate_embeddings.py --vault-path /path/to/vault
 
-# 開発用サーバー起動
-python3 upload_server.py
+# 意味検索
+python3 semantic_search.py "検索クエリ" --top-k 10
 ```
 
 ## ファイル構造
+- `obsidian_news_pipeline.py` - メインパイプライン
+- `generate_embeddings.py` - 埋め込み生成
+- `semantic_search.py` - 意味検索
+- `fetch_models.py` - モデル一覧取得
+- `upload_server.py` - HTTPS アップロードサーバー
+- `batch_marker.sh` - PDF 一括変換
 
-```
-news-ocr-pipeline/
-├── obsidian_news_pipeline.py  # メインパイプライン
-├── generate_embeddings.py     # 埋め込み生成
-├── semantic_search.py         # 意味検索
-├── upload_server.py           # HTTPSアップロードサーバー
-├── batch_marker.sh           # 一括変換スクリプト
-└── config設定スクリプト群/
-```
-
-## 主要機能
-
-- PDF → 画像変換（pdfimages/pdfplumber）
-- EasyOCR による日本語・英語 OCR
-- 記事の自動検出と分割
-- 埋め込み生成（multilingual-e5-small）
-- 既存ノートとの類似度計算
-- Obsidian 用 Markdown 出力
-
-## 環境変数
-
-```bash
-# .env.github
-GITHUB_TOKEN=ghp_xxxxxxxxxxxx
-
-# .hermes/.env
-GOOGLE_API_KEY=your_key_here
-CLOUDFLARE_API_TOKEN=your_token_here
-OPENROUTER_API_KEY=your_key_here
-```
-
-## 注意事項
-
-- EasyOCR には GPU サポートが推奨
-- 設定スクリプトには環境固有のシークレットが含まれる可能性
-- `venv/`, `__pycache__/`, `vault-ai/embeddings.json` は除外済み
+## コードスタイル
+- ruff 使用（ruff.toml 参照）
+- 行長：120 文字
+- インデント：スペース 4 個
