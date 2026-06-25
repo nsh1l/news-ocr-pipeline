@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+venv312/
+marker-venv/
+ENV/
+env/
+.venv
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Embeddings cache
+vault-ai/embeddings.json
+vault-ai/*.json
+*.bin
+torchinductor_*/
+
+# Test files
+test_*.py
+
+# Lock files
+uv-*.lock
+poetry.lock
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local config (contains secrets)
+*.local.env
+.env.local
+
+# Output directories
+news-output/
