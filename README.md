@@ -197,6 +197,45 @@ themes: [newspaper]
 <!-- source: newspaper.pdf page 1 -->
 ```
 
+### アップロード・バッチ処理
+
+#### `upload_server.py`
+HTTPS アップロードサーバー + 静的 HTML アップローダー。新聞 PDF をブラウザからアップロードするためのサーバー（Python 3.13 対応）。
+
+**機能:**
+- HTTPS セルフ署名証明書による暗号化
+- Basic 認証によるアクセス制御
+- アップロードディレクトリへの保存
+- Cloudflare Tunnel 連携可能
+
+**使用例:**
+```bash
+python3 upload_server.py
+# デフォルト: ポート 8443 で HTTPS サーバー起動
+# 認証情報は /tmp/upload.creds から読み込み
+```
+
+#### `batch_marker.sh`
+新聞 PDF 一括変換スクリプト（Marker-PDF 版）。
+
+**機能:**
+- 指定ディレクトリ内の全 PDF ファイルを一括処理
+- Marker-PDF による日本語 OCR 変換
+- 処理ログの記録
+
+**使用例:**
+```bash
+bash batch_marker.sh
+# 入力: /home/nsh1l/news-input/*.pdf
+# 出力: /home/nsh1l/news-output-marker/
+```
+
+#### `unify_cf_key.py`
+Cloudflare API キーを統一：config.yaml の動作確認済み cfut トークンを .env に反映。
+
+#### `update_providers.py` / `update_providers_v2.py`
+OpenCode プロバイダー設定（config.yaml）のモデル一覧を最新化するスクリプト。
+
 ## 注意事項
 
 - **秘密情報の管理**: `patch_config.py` や `set_gemini_key.py` には環境固有のシークレットが含まれる可能性があります。これらを公開リポジトリにコミットする前に、必ず環境変数参照に置き換えてください。
